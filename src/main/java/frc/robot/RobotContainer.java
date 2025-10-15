@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Candle;
 import frc.robot.subsystems.ExampleSubsystem;
 
 import com.ctre.phoenix6.configs.CANdleConfiguration;
@@ -25,6 +26,7 @@ import com.ctre.phoenix6.signals.StripTypeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -44,6 +46,7 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
       private final CANdle m_candle = new CANdle(44);
+      private final Candle m_CyberCandle = new Candle();
       private enum AnimationType {
         None,
         ColorFlow,
@@ -141,6 +144,8 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.a().whileTrue(new ExampleCommand(m_exampleSubsystem, m_candle));
+    m_driverController.b().onTrue(new InstantCommand(() -> {m_candle.setControl(new SolidColor(0, 7));}));
+    m_driverController.y().onTrue(m_CyberCandle.setMultiColor());
 
   }
 
