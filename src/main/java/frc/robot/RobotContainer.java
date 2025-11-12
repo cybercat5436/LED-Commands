@@ -144,8 +144,9 @@ public class RobotContainer {
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_driverController.a().whileTrue(new ExampleCommand(m_exampleSubsystem, m_candle));
-    m_driverController.b().onTrue(new InstantCommand(() -> {m_candle.setControl(new SolidColor(0, 7));}));
-    m_driverController.y().onTrue(m_CyberCandle.setMultiColor());
+    m_driverController.b().onTrue(new InstantCommand(() -> {m_candle.setControl(new SolidColor(0, 1000));}));
+    m_driverController.y().whileTrue(m_CyberCandle.setMultiColor());
+    m_driverController.x().whileTrue(m_CyberCandle.setMultiAnimations());
 
   }
 

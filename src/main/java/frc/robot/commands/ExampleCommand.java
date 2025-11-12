@@ -22,6 +22,8 @@ public class ExampleCommand extends Command {
   private final ExampleSubsystem m_subsystem;
   private final CANdle m_candle;
   private static final RGBWColor kGreen = new RGBWColor(0, 217, 0, 0);
+  private static final RGBWColor kMustard = new RGBWColor(255, 219, 88, 0);
+  private static final RGBWColor kBlue = new RGBWColor(0, 0, 255, 0);
 
   /**
    * Creates a new ExampleCommand.
@@ -51,8 +53,11 @@ System.out.println("Line is being executed###################");
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {m_candle.setControl(new SolidColor(0, 3).withColor(kGreen));
-  System.out.println("Execute is being executed");}
+  public void execute() {
+    m_candle.setControl(new SolidColor(0, 50).withColor(kGreen));
+    m_candle.setControl(new SolidColor(51, 100).withColor(kMustard));
+    System.out.println("Execute is being executed");
+}
 
   // Called once the command ends or is interrupted.
   @Override
