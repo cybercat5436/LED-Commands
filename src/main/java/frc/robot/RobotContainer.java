@@ -143,10 +143,16 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_driverController.a().whileTrue(new ExampleCommand(m_exampleSubsystem, m_candle));
-    m_driverController.b().onTrue(new InstantCommand(() -> {m_candle.setControl(new SolidColor(0, 1000));}));
-    m_driverController.y().whileTrue(m_CyberCandle.setMultiColor());
+    m_driverController.a().whileTrue(m_CyberCandle.setMultiColorAnimations());
+    m_driverController.b().onTrue(new InstantCommand(() -> {
+      m_candle.setControl(new SolidColor(0, 1000));
+      for (int i = 0; i < 8; ++i) {
+        m_candle.setControl(new EmptyAnimation(i));
+      }
+    }));
+    m_driverController.y().onTrue(m_CyberCandle.setMultiColor());
     m_driverController.x().whileTrue(m_CyberCandle.setMultiAnimations());
+   // m_driverController.leftBumper().
 
   }
 

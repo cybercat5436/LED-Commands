@@ -7,12 +7,17 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.controls.ColorFlowAnimation;
 import com.ctre.phoenix6.controls.EmptyAnimation;
+import com.ctre.phoenix6.controls.RainbowAnimation;
 import com.ctre.phoenix6.controls.SolidColor;
+import com.ctre.phoenix6.controls.StrobeAnimation;
+import com.ctre.phoenix6.controls.TwinkleAnimation;
+import com.ctre.phoenix6.controls.TwinkleOffAnimation;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StatusLedWhenActiveValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
 
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,13 +26,19 @@ public class Candle extends SubsystemBase {
   /** Creates a new Candle. */
   private final CANdle m_candle = new CANdle(44);
   private static final RGBWColor kGreen = new RGBWColor(0, 217, 0, 0);
-  private static final RGBWColor kMustard = new RGBWColor(255, 219, 88, 0);
+  private static final RGBWColor kMustard = new RGBWColor(254, 226, 131, 0);
   private static final RGBWColor kBlue = new RGBWColor(0, 0, 255, 0);
+  private static final RGBWColor kRed = new RGBWColor(255, 0, 0, 0);
+
 
   private int slot1Start = 8;
-  private int slot1End = 111;
-  private int slot2Start = 112;
-  private int slot2End = 1000;
+  private int slot1End = 78;
+  private int slot2Start = 79;
+  private int slot2End = 157;
+  private int slot3Start = 158;
+  private int slot3End = 236;
+  private int slot4Start = 237;
+  private int slot4End = 307;
 
 
 
@@ -48,7 +59,7 @@ public class Candle extends SubsystemBase {
   }
 public Command setMultiColor(){
   return new InstantCommand(( )-> {
-    m_candle.setControl(new SolidColor(slot1Start, slot1End).withColor(kGreen));
+    m_candle.setControl(new SolidColor(slot1Start, slot1End).withColor(kBlue));
     m_candle.setControl(new SolidColor(slot2Start, slot2End).withColor(kMustard));
   });
 }
@@ -56,16 +67,50 @@ public Command setMultiColor(){
 public Command setMultiAnimations(){
   return new InstantCommand(()-> {
      m_candle.setControl(
-      new ColorFlowAnimation(slot1Start, slot1End).withSlot(1)
-      .withColor(kGreen)
+      new TwinkleAnimation(slot1Start, slot1End).withSlot(1)
+       .withColor(kGreen)
+       //.withColor(kBlue)
+      // .withUpdateFreqHz(40)
       );
       m_candle.setControl(
-        new ColorFlowAnimation(slot2Start, slot2End).withSlot(2)
-        .withColor(kMustard)
+        new TwinkleAnimation(slot2Start, slot2End).withSlot(2)
+        .withColor(kRed)
         );
-
+        m_candle.setControl(
+          new TwinkleAnimation(slot3Start, slot3End).withSlot(3)
+          .withColor(kGreen)
+          );
+          m_candle.setControl(
+            new TwinkleAnimation(slot4Start, slot4End).withSlot(4)
+            .withColor(kRed)
+            );
   });
 }
+
+public Command setMultiColorAnimations() {
+  return new InstantCommand(()-> {
+    m_candle.setControl(
+     new TwinkleAnimation(slot1Start, slot1End).withSlot(1)
+      .withColor(kBlue)
+      //.withColor(kBlue)
+     // .withUpdateFreqHz(40)
+     );
+     m_candle.setControl(
+       new TwinkleAnimation(slot2Start, slot2End).withSlot(2)
+       .withColor(kMustard)
+       );
+       m_candle.setControl(
+         new TwinkleAnimation(slot3Start, slot3End).withSlot(3)
+         .withColor(kBlue)
+         );
+         m_candle.setControl(
+           new TwinkleAnimation(slot4Start, slot4End).withSlot(4)
+           .withColor(kMustard)
+           );
+ });
+};
+
+
 
   @Override
   public void periodic() {
